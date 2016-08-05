@@ -7,6 +7,7 @@ use ber::{Tag, Type, Class, Payload};
 use search::{Entry, Scope, DerefAlias};
 use tag::LDAPTag;
 use err::{LDAPResult, LDAPError};
+use protocol::ResultCode;
 
 
 pub struct LDAPConnection
@@ -97,7 +98,13 @@ impl LDAPConnection
             return match en.into_payload()
             {
                 Payload::Constructed(_) => Err(LDAPError::DecodingFailure),
-                Payload::Primitive(_) => Ok(()),
+                Payload::Primitive(res) => {
+                    if res[0] == ResultCode::success as u8 {
+                        Ok(())
+                    } else {
+                        Err(LDAPError::BindFailed)
+                    }
+                }
             }
         }
 

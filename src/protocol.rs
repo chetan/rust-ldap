@@ -25,7 +25,7 @@ enum ProtocolOP
     intermediateResponse,
 }
 
-enum resultCode
+pub enum ResultCode
 {
     success = 0,
     operationError = 1,

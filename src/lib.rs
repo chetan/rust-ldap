@@ -6,6 +6,7 @@ pub mod search;
 
 mod err;
 mod tag;
+mod protocol;
 
 pub use connection::LDAPConnection;
 pub use err::{LDAPResult, LDAPError};
